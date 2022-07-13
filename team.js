@@ -1,5 +1,9 @@
 import inquirer from "inquirer"
 
+// import Engineer from "./lib/engineer"
+// import Intern from "./lib/intern"
+// import Manager from "./lib/manager"
+
 const questionsManager = [
     {
         type: 'input',
@@ -27,7 +31,7 @@ const questionsEmployee = [
         type: 'list',
         name: 'type',
         message: 'Please select the type of employee you want to add',
-        choices: ['engineer', 'intern']
+        choices: ['engineer', 'intern', 'none']
     },
     {
         type: 'input',
@@ -58,3 +62,27 @@ const questionsEmployee = [
     }
 
 ]
+async function managerQs() {
+    
+    const managerAnswers = await inquirer.prompt(questionsManager);
+    console.log("Your responses: ", managerAnswers);
+
+    employeeQs()
+
+    
+}
+
+
+async function employeeQs() {
+
+    const employeeAnswers = await inquirer.prompt(questionsEmployee);
+    console.log("Your responses: ", employeeAnswers)
+
+    if (employeeAnswers.type === "engineer" ) employeeQs()
+    if (employeeAnswers.type === "intern" ) employeeQs()
+    if (employeeAnswers.type === "none") return
+}
+
+
+
+managerQs()
