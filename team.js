@@ -32,43 +32,28 @@ const questionsEmployee = [
         type: 'list',
         name: 'type',
         message: 'Please select the type of employee you want to add',
-        choices: ['engineer', 'intern', 'finalize team']
+        choices: ['engineer', 'intern']
     },
     {
         type: 'input',
-        name: 'engineername',
-        message: 'Please enter the name of the engineer',
-        when: (input) => input.type === 'engineer'
+        name: 'name',
+        message: 'Please enter the name of the employee',
+        
+
     },
     {
         type: 'input',
-        name: 'engineerid',
-        message: 'Please enter the id of the engineer',
-        when: (input) => input.type === 'engineer'
+        name: 'id',
+        message: 'Please enter the id of the employee',
+        
+        
     },
     {
         type: 'input',
-        name: 'engineeremail',
-        message: 'Please enter the email of the engineer',
-        when: (input) => input.type === 'engineer'
-    },
-    {
-        type: 'input',
-        name: 'internname',
-        message: 'Please enter the name of the intern',
-        when: (input) => input.type === 'intern'
-    },
-    {
-        type: 'input',
-        name: 'internid',
-        message: 'Please enter the id of the intern',
-        when: (input) => input.type === 'intern'
-    },
-    {
-        type: 'input',
-        name: 'internemail',
-        message: 'Please enter the email of the intern',
-        when: (input) => input.type === 'intern'
+        name: 'email',
+        message: 'Please enter the email of the employee',
+        
+        
     },
     {
         type: 'input',
@@ -82,21 +67,25 @@ const questionsEmployee = [
         message: "Please enter the school of the intern",
         when: (input) => input.type === 'intern'
     },
+    {
+        type: 'list',
+        name: 'confirm',
+        message: 'Do you want to add another employee?',
+        choices: ['yes', 'no (finalize team)']
+
+    }
 
 ]
 
 
 
-const roles = {Manager:[],Engineers:[],Interns:[]};
+const team = []
 
 const startQs = () => {
     
     inquirer.prompt(questionsManager).then(managerAnswers => {
        
     console.log("Your responses: ", managerAnswers)
-
-    managerAnswers == 'manager'
-    roles.Manager.push(new Manager(managerAnswers.name,managerAnswers.id,managerAnswers.email,managerAnswers.office))
 
 
     employeeQs()
@@ -111,14 +100,11 @@ const employeeQs = () => {
     inquirer.prompt(questionsEmployee).then(employeeAnswers => {
     console.log("Your responses: ", employeeAnswers)
 
-    if (employeeAnswers.type === 'engineer' ) employeeQs()
-    if (employeeAnswers.type === 'intern' ) employeeQs()
-    if (employeeAnswers.type === 'finalize team') return genHTML(roles)
+    if (employeeAnswers.confirm === 'yes' ) employeeQs()
 
-    employeeAnswers.type === 'engineer'
-    roles.Engineers.push(new Engineer(employeeAnswers.engineername,employeeAnswers.engineerid,employeeAnswers.engineeremail,employeeAnswers.github))
-    employeeAnswers.type === 'intern'
-    roles.Interns.push(new Intern(employeeAnswers.internname,employeeAnswers.internid,employeeAnswers.internemail,employeeAnswers.school))
+    if (employeeAnswers.confirm === 'no (finalize team)' ) return genHTML(team)
+
+
 
     });
 }
