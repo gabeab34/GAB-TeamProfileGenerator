@@ -1,10 +1,10 @@
 import inquirer from "inquirer"
 
-// import Engineer from "./lib/engineer"
-// import Intern from "./lib/intern"
-// import Manager from "./lib/manager"
+import Engineer from "./lib/engineer.js"
+import Intern from "./lib/intern.js"
+import Manager from "./lib/manager.js"
 
-const questions = [
+const questionsManager = [
     {
         type: 'input',
         name: 'name',
@@ -25,6 +25,9 @@ const questions = [
         name: 'office',
         message: 'Please enter the office number of the team manager:'
     },
+]
+
+const questionsEmployee = [
     {
         type: 'list',
         name: 'type',
@@ -79,20 +82,24 @@ const questions = [
         message: "Please enter the school of the intern",
         when: (input) => input.type === 'intern'
     },
-    
-    
-
 
 ]
-const startqs = () => {
-    
-    inquirer.prompt(questions).then(Answers => {
-       
-    console.log("Your responses: ", Answers)
 
-    if (Answers.type === 'engineer' ) inquirer.prompt(questions.list)
-    if (Answers.type === 'intern' ) inquirer.prompt(questions.list)
-    if (Answers.type === 'finalize team') return
+
+
+const roles = {Manager:[],Engineers:[],Interns:[]};
+
+const startQs = () => {
+    
+    inquirer.prompt(questionsManager).then(managerAnswers => {
+       
+    console.log("Your responses: ", managerAnswers)
+
+    managerAnswers == 'manager'
+    roles.Manager.push(new Manager(managerAnswers.name,managerAnswers.id,managerAnswers.email,managerAnswers.office))
+
+
+    employeeQs()
 
     }) 
 }
@@ -106,9 +113,15 @@ const employeeQs = () => {
 
     if (employeeAnswers.type === 'engineer' ) employeeQs()
     if (employeeAnswers.type === 'intern' ) employeeQs()
-    if (employeeAnswers.type === 'finalize team') return
+    if (employeeAnswers.type === 'finalize team') return genHTML(roles)
+
+    employeeAnswers.type === 'engineer'
+    roles.Engineers.push(new Engineer(employeeAnswers.engineername,employeeAnswers.engineerid,employeeAnswers.engineeremail,employeeAnswers.github))
+    employeeAnswers.type === 'intern'
+    roles.Interns.push(new Intern(employeeAnswers.internname,employeeAnswers.internid,employeeAnswers.internemail,employeeAnswers.school))
+
     });
 }
 
 
-startqs()
+startQs()
