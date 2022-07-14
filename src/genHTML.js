@@ -1,5 +1,9 @@
-// import team from '../team.js'
 
-// const genHTML = (team)
 
-// export default genHTML
+
+
+const genHTML = roles => {
+    
+}
+
+export default genHTML
