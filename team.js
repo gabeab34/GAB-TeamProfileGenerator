@@ -79,13 +79,15 @@ const questionsEmployee = [
 
 
 
-const team = []
+const roles = {Manager:[],Engineers:[],Interns:[]};
 
 const startQs = () => {
     
     inquirer.prompt(questionsManager).then(managerAnswers => {
        
     console.log("Your responses: ", managerAnswers)
+
+    roles.Manager.push(new Manager(managerAnswers.name,managerAnswers.id,managerAnswers.email,managerAnswers.office))
 
 
     employeeQs()
@@ -99,15 +101,17 @@ const employeeQs = () => {
 
     inquirer.prompt(questionsEmployee).then(employeeAnswers => {
     console.log("Your responses: ", employeeAnswers)
-
+        roles.Engineers.push(new Engineer(employeeAnswers.name,employeeAnswers.id,employeeAnswers.email,employeeAnswers.github))
+        roles.Interns.push(new Intern(employeeAnswers.name,employeeAnswers.id,employeeAnswers.email,employeeAnswers.school))
     if (employeeAnswers.confirm === 'yes' ) employeeQs()
 
-    if (employeeAnswers.confirm === 'no (finalize team)' ) return genHTML(team)
-
-
+    if (employeeAnswers.confirm === 'no (finalize team)' ) return genHTML(roles)
+       
+   
 
     });
 }
 
 
 startQs()
+export default roles;
