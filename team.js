@@ -4,7 +4,7 @@ import inquirer from "inquirer"
 // import Intern from "./lib/intern"
 // import Manager from "./lib/manager"
 
-const questionsManager = [
+const questions = [
     {
         type: 'input',
         name: 'name',
@@ -24,29 +24,48 @@ const questionsManager = [
         type: 'input',
         name: 'office',
         message: 'Please enter the office number of the team manager:'
-    }
-]
-const questionsEmployee = [
+    },
     {
         type: 'list',
         name: 'type',
         message: 'Please select the type of employee you want to add',
-        choices: ['engineer', 'intern', 'none']
+        choices: ['engineer', 'intern', 'finalize team']
     },
     {
         type: 'input',
-        name: 'name',
-        message: 'Please enter the name of the employee'
+        name: 'engineername',
+        message: 'Please enter the name of the engineer',
+        when: (input) => input.type === 'engineer'
     },
     {
         type: 'input',
-        name: 'id',
-        message: 'Please enter the id of the employee'
+        name: 'engineerid',
+        message: 'Please enter the id of the engineer',
+        when: (input) => input.type === 'engineer'
     },
     {
         type: 'input',
-        name: 'email',
-        message: 'Please enter the email of the employee'
+        name: 'engineeremail',
+        message: 'Please enter the email of the engineer',
+        when: (input) => input.type === 'engineer'
+    },
+    {
+        type: 'input',
+        name: 'internname',
+        message: 'Please enter the name of the intern',
+        when: (input) => input.type === 'intern'
+    },
+    {
+        type: 'input',
+        name: 'internid',
+        message: 'Please enter the id of the intern',
+        when: (input) => input.type === 'intern'
+    },
+    {
+        type: 'input',
+        name: 'internemail',
+        message: 'Please enter the email of the intern',
+        when: (input) => input.type === 'intern'
     },
     {
         type: 'input',
@@ -59,30 +78,37 @@ const questionsEmployee = [
         name: 'school',
         message: "Please enter the school of the intern",
         when: (input) => input.type === 'intern'
-    }
+    },
+    
+    
+
 
 ]
-async function managerQs() {
+const startqs = () => {
     
-    const managerAnswers = await inquirer.prompt(questionsManager);
-    console.log("Your responses: ", managerAnswers);
+    inquirer.prompt(questions).then(Answers => {
+       
+    console.log("Your responses: ", Answers)
 
-    employeeQs()
+    if (Answers.type === 'engineer' ) inquirer.prompt(questions.list)
+    if (Answers.type === 'intern' ) inquirer.prompt(questions.list)
+    if (Answers.type === 'finalize team') return
 
-    
+    }) 
 }
 
 
-async function employeeQs() {
 
-    const employeeAnswers = await inquirer.prompt(questionsEmployee);
+const employeeQs = () => {
+
+    inquirer.prompt(questionsEmployee).then(employeeAnswers => {
     console.log("Your responses: ", employeeAnswers)
 
-    if (employeeAnswers.type === "engineer" ) employeeQs()
-    if (employeeAnswers.type === "intern" ) employeeQs()
-    if (employeeAnswers.type === "none") return
+    if (employeeAnswers.type === 'engineer' ) employeeQs()
+    if (employeeAnswers.type === 'intern' ) employeeQs()
+    if (employeeAnswers.type === 'finalize team') return
+    });
 }
 
 
-
-managerQs()
+startqs()
