@@ -26,7 +26,7 @@ const questionsManager = [
     },
     {
         type: 'input',
-        name: 'office',
+        name: 'officeNumber',
         message: 'Please enter the office number of the team manager:'
     },
 ]
@@ -34,7 +34,7 @@ const questionsManager = [
 const questionsEmployee = [
     {
         type: 'list',
-        name: 'type',
+        name: 'role',
         message: 'Please select the type of employee you want to add',
         choices: ['engineer', 'intern']
     },
@@ -63,13 +63,13 @@ const questionsEmployee = [
         type: 'input',
         name: 'github',
         message: 'Please enter the github username of the engineer',
-        when: (input) => input.type === 'engineer'
+        when: (input) => input.role === 'engineer'
     },
     {
         type: 'input',
         name: 'school',
         message: "Please enter the school of the intern",
-        when: (input) => input.type === 'intern'
+        when: (input) => input.role === 'intern'
     },
     {
         type: 'list',
@@ -91,7 +91,7 @@ const startQs = () => {
        
     console.log("Your responses: ", managerAnswers)
 
-    roles.Manager.push(new Manager(managerAnswers.name,managerAnswers.id,managerAnswers.email,managerAnswers.office))
+    roles.Manager.push(new Manager(managerAnswers.name,managerAnswers.id,managerAnswers.email,managerAnswers.officeNumber))
 
 
     employeeQs()
@@ -105,7 +105,9 @@ const employeeQs = () => {
 
     inquirer.prompt(questionsEmployee).then(employeeAnswers => {
     console.log("Your responses: ", employeeAnswers)
+    if (employeeAnswers.role === 'engineer')
         roles.Engineers.push(new Engineer(employeeAnswers.name,employeeAnswers.id,employeeAnswers.email,employeeAnswers.github))
+    if (employeeAnswers.role === 'intern')    
         roles.Interns.push(new Intern(employeeAnswers.name,employeeAnswers.id,employeeAnswers.email,employeeAnswers.school))
     if (employeeAnswers.confirm === 'yes' ) employeeQs()
 
