@@ -1,0 +1,87 @@
+*{
+    font-family: Georgia, 'Times New Roman', Times, serif
+}
+
+body{
+  background-color:lightsalmon;  
+}
+
+nav{
+    text-align: center; 
+}
+
+main{  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 75px;
+    height: auto;
+    width: auto;
+}
+
+h1{
+    color: black;
+    font-size: 48pt;
+}
+
+#team{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;  
+}
+
+.card{
+    background-color:aquamarine;
+    border-color: white;
+    border-style: solid;
+    border-width: 5px;
+    margin: 20px;
+    height: 100%;
+    width: 75%;
+    border-radius: 30px;   
+}
+
+.position{
+    background-color:goldenrod;
+    height: auto;
+    padding: 10px;
+    text-align: center;
+    border-radius: 30px;
+}
+
+h2{
+    font-size: 36px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2,h3{
+    color: #051923;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+ul{
+    padding: 15px;
+    margin: 10px;
+    margin-top: auto;
+}
+
+li{
+    color: black;
+    font-size: 20pt;
+    margin: 10px;
+    padding: 2px;
+    width: fit-content;   
+}
+
+a {
+    color:blue;
+}
+
+a:visited{
+    color: blueviolet;
+}
